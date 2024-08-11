@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://bahg8piforqi1"]
+
+[ext_resource type="Script" path="res://src/Player/player.gd" id="1_nqus4"]
+[ext_resource type="Script" path="res://src/Camera/cursor.gd" id="1_xp5kf"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_iupbm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eh1br"]
+albedo_color = Color(0.686275, 0.027451, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gacmo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0g4wi"]
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="Level" type="Node3D"]
+script = ExtResource("1_xp5kf")
+
+[node name="Ground" type="CSGCylinder3D" parent="."]
+use_collision = true
+radius = 24.0
+height = 0.002
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.02719, 0)
+script = ExtResource("1_nqus4")
+metadata/_edit_group_ = true
+
+[node name="Body" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_iupbm")
+surface_material_override/0 = SubResource("StandardMaterial3D_eh1br")
+
+[node name="Staff" type="MeshInstance3D" parent="Player/Body"]
+transform = Transform3D(0.00589102, 0.918531, -0.00152891, 0, -0.00589261, -0.239053, -0.10657, 0.050775, -8.45157e-05, 0.00171292, 0.425319, 0.498545)
+mesh = SubResource("CylinderMesh_gacmo")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_0g4wi")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 25, 0)
+shadow_enabled = true
+
+[node name="MainCam" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 34, 24)
+fov = 58.0
