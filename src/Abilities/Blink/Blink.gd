@@ -3,7 +3,8 @@ class_name Blink extends Ability
 
 const blink_range = 10
 func use_ability(user, mouse_coords):
-	if is_on_cooldown() == true:
+	print(can_use_ability())
+	if not can_use_ability():
 		return
 	print("Vektor:",mouse_coords.position - user.position, "User:", user.position, "Cursor:", mouse_coords.position)
 	

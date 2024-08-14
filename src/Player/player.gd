@@ -11,9 +11,9 @@ var target_velocity = Vector3.ZERO
 @export var fall_acceleration = 75
 
 var blink = load_ability("Blink")
-var blinkClass = blink.new("ability_q", 10)
+#var blinkClass = blink.new("ability_q", 10)
 
-var abilities = [blinkClass]
+var abilities = [blink]
 	
 
 func _unhandled_input(event):
