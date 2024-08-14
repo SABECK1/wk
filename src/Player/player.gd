@@ -11,6 +11,18 @@ var target_velocity = Vector3.ZERO
 @export var fall_acceleration = 75
 
 var blink = load_ability("Blink")
+var blinkClass = blink.new("ability_q", 10)
+
+var abilities = [blinkClass]
+	
+
+func _unhandled_input(event):
+	if event is InputEventKey:
+		for action in InputMap.get_actions():
+			if InputMap.action_has_event(action, event):
+				for ability in abilities:
+					if ability.get_trigger() == action:
+						ability.use_ability(self, get_cursor())
 
 func get_cursor():
 	#	Get Mousepos as Target Ray
@@ -40,8 +52,6 @@ func _physics_process(delta):
 		direction.z -= 1
 	if Input.is_action_pressed("ui_down"):
 		direction.z += 1
-	if Input.is_key_pressed(KEY_Q):
-		blink.use_ability(mouse_coordinates)
 
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
@@ -54,7 +64,6 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	
-	#
 	if not mouse_coordinates.is_empty():
 		var intersection_pos = mouse_coordinates.position
 		var look_at = Vector3(intersection_pos.x, self.position.y, intersection_pos.z)
