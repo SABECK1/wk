@@ -6,16 +6,24 @@ func use_ability(user, mouse_coords):
 	print(can_use_ability())
 	if not can_use_ability():
 		return
-	print("Vektor:",mouse_coords.position - user.position, "User:", user.position, "Cursor:", mouse_coords.position)
 	
 	# When the cursor hovers directly over the player, the player should not move further than that using blink
 	var maximum_distance_vector = mouse_coords.position - user.position 
 	
-	# Normalize Vector and multiply it by Blink range
-	var direction = mouse_coords.position.normalized()
-	var reach = direction * blink_range
-	user.position = reach + user.position
+	var direction = mouse_coords.position - user.position
+	var direction_norm = direction.normalized()
 	
+	# If div < 1 the teleport still 
+	if direction.x < 1 and direction.x > -1:
+		user.position.x = user.position.x + direction.x * blink_range
+	else:
+		user.position.x = user.position.x + direction_norm.x * blink_range
+	if direction.z < 1 and direction.z > -1:
+		user.position.z = user.position.z + direction.z * blink_range
+	else:
+		user.position.z = user.position.z + direction_norm.z * blink_range
+		
 	set_on_cooldown()
+	
 
 

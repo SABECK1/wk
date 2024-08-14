@@ -6,7 +6,7 @@ var base_cooldown : float # Cooldown time in seconds
 var ability_trigger : String # Key to trigger ability
 var can_use : bool
 
-func _init(use_key : String = "ability_q", cooldown_value : float = 10.0):
+func _init(use_key : String = "ability_q", cooldown_value : float = 0.5):
 	base_cooldown = cooldown_value
 	ability_trigger = use_key
 	can_use = true
