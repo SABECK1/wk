@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cknhrlurixbs3"]
+
+[ext_resource type="Script" path="res://src/Abilities/Ghost/Ghost.gd" id="1_q5m7w"]
+
+[node name="Ghost" type="Node3D"]
+script = ExtResource("1_q5m7w")

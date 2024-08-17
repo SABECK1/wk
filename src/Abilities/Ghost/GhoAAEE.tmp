@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0gmnxslvnow"]
+
+[ext_resource type="Script" path="res://src/Abilities/Ghost/GhostDisplay.gd" id="1_2ylfu"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sittm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_edir5"]
+albedo_color = Color(0.686275, 0.027451, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_57xxh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pmxxu"]
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="GhostDisplay" type="Node3D"]
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.02719, 0)
+script = ExtResource("1_2ylfu")
+metadata/_edit_group_ = true
+
+[node name="Body" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_sittm")
+surface_material_override/0 = SubResource("StandardMaterial3D_edir5")
+
+[node name="Staff" type="MeshInstance3D" parent="Player/Body"]
+transform = Transform3D(0.00589102, 0.918531, -0.00152891, 3.1016e-12, -0.00589261, -0.239053, -0.10657, 0.050775, -8.45157e-05, 0.00171314, 0.425319, -0.501455)
+mesh = SubResource("CylinderMesh_57xxh")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_pmxxu")

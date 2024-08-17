@@ -36,8 +36,8 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_0g4wi")
 
 [node name="MainCam" type="Camera3D" parent="Player"]
-transform = Transform3D(-1, -7.57104e-08, 4.37114e-08, 0, 0.5, 0.866025, -8.74228e-08, 0.866025, -0.5, 2.09815e-06, 32.9728, -24)
-fov = 58.0
+transform = Transform3D(1, -1.38931e-08, -1.81059e-08, 2.26267e-08, 0.707107, 0.707107, 2.97886e-09, -0.707107, 0.707107, -3.75918e-06, 32.9728, 43)
+fov = 46.1
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 25, 0)
