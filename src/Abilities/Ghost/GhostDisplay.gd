@@ -10,9 +10,6 @@ func configure(parent = null, direction = null):
 	ghost_parent = parent
 	ghost_direction = direction
 
-func _ready():
-	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -33,6 +30,7 @@ func _physics_process(delta):
 	ghost_current_distance += ghost_target_velocity
 
 	if ghost_current_distance.length() >= ghost_max_distance:
+		ghost_parent.position = self.position
 		self.queue_free()
 	move_and_slide()
 	
