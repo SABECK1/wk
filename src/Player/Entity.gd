@@ -8,3 +8,5 @@ func load_ability(name : String, use_key : String, cooldown_value : float):
 	new_ability.base_cooldown = cooldown_value
 	add_child(new_ability)
 	return new_ability
+
+

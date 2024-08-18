@@ -2,6 +2,7 @@ extends Entity
 const RAY_LENGTH = 2000
 var ray_origin = Vector3()
 var ray_target = Vector3()
+@onready var cam = get_node("/root/Game/Levels/MainCam")
 
 var blink = load_ability("Blink", "ability_q", 10.0)
 var ghost = load_ability("Ghost", "ability_e", 2.0)
@@ -16,13 +17,15 @@ func _unhandled_input(event):
 			if InputMap.action_has_event(action, event):
 				for ability in abilities:
 					if ability.get_trigger() == action:
+						if not is_multiplayer_authority():
+							return
 						ability.use_ability(self, get_cursor())
 
 func get_cursor():
 	#	Get Mousepos as Target Ray
 	var mouse_pos = get_viewport().get_mouse_position()
-	ray_origin = $MainCam.project_ray_origin(mouse_pos)
-	ray_target = ray_origin + $MainCam.project_ray_normal(mouse_pos) * RAY_LENGTH
+	ray_origin = cam.project_ray_origin(mouse_pos)
+	ray_target = ray_origin + cam.project_ray_normal(mouse_pos) * RAY_LENGTH
 	
 #	New Ray Object for Cursor Collision with World
 	var ray_query = PhysicsRayQueryParameters3D.create(ray_origin, ray_target)
@@ -36,6 +39,8 @@ func get_cursor():
 var speed = PlayerVariables.speed
 
 func _physics_process(delta):
+	if not is_multiplayer_authority():
+		return
 	var mouse_coordinates = get_cursor()
 
 	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
