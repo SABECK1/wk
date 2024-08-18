@@ -6,10 +6,8 @@ var ray_target = Vector3()
 
 var blink = load_ability("Blink", "ability_q", 10.0)
 var ghost = load_ability("Ghost", "ability_e", 2.0)
-#var blinkClass = blink.new("ability_q", 10)
 
 var abilities = [blink, ghost]
-	
 
 func _unhandled_input(event):
 	if event is InputEventKey:
