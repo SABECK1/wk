@@ -6,9 +6,9 @@ var ghost_parent = null
 var ghost_max_distance = 1150
 var ghost_current_distance = Vector3.ZERO
 
-func configure(parent = null, direction = null):
-	ghost_parent = parent
+func configure(parent: Entity = null, direction: Vector3 = Vector3.ZERO):
 	ghost_direction = direction
+	ghost_parent = parent
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

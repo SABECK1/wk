@@ -2,14 +2,16 @@ extends Entity
 const RAY_LENGTH = 2000
 var ray_origin = Vector3()
 var ray_target = Vector3()
-@onready var cam = get_node("/root/Game/Levels/MainCam")
+@onready var cam = get_node("/root/Game/MainCam")
+#@onready var cam = get_node("/root/Game/Levels/MainCam")
+#@onready var cam = $MainCam
 
+
+	
 var blink = load_ability("Blink", "ability_q", 10.0)
 var ghost = load_ability("Ghost", "ability_e", 2.0)
-#var blinkClass = blink.new("ability_q", 10)
 
 var abilities = [blink, ghost]
-	
 
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -19,7 +21,7 @@ func _unhandled_input(event):
 					if ability.get_trigger() == action:
 						if not is_multiplayer_authority():
 							return
-						ability.use_ability(self, get_cursor())
+						ability.use_ability.rpc(self.get_path(), get_cursor())
 
 func get_cursor():
 	#	Get Mousepos as Target Ray

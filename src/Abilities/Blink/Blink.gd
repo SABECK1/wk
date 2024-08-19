@@ -2,11 +2,13 @@ class_name Blink extends Ability
 
 
 const blink_range = 10
-func use_ability(user, mouse_coords):
+func use_ability(userRef, mouse_coords):
 	if not can_use_ability():
 		print("Blink on Cooldown")
 		return
 	print("Used Blink")
+	
+	var user = get_node(userRef)
 	# When the cursor hovers directly over the player, the player should not move further than that using blink
 	var maximum_distance_vector = mouse_coords.position - user.position 
 	

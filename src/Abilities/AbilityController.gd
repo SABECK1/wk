@@ -11,7 +11,7 @@ func _init(use_key : String = "", cooldown_value : float = 0.5):
 	ability_trigger = use_key
 	can_use = true
 	
-
+@rpc("call_local")
 func use_ability(user : Entity, direction : Dictionary):
 	# This method should be overridden by subclasses to define the actual ability effect.
 	pass
@@ -29,5 +29,8 @@ func can_use_ability():
 		
 func get_trigger():
 	return ability_trigger
+	
+func get_ref(node_path):
+	return get_node(node_path)
 	
 

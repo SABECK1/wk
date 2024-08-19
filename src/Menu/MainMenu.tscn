@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://blxonpuumhciy"]
 
 [ext_resource type="Script" path="res://src/Menu/MainMenu.gd" id="1_4epyi"]
-[ext_resource type="PackedScene" uid="uid://bahg8piforqi1" path="res://src/level.tscn" id="2_luxqi"]
+[ext_resource type="PackedScene" uid="uid://bahg8piforqi1" path="res://src/Scenes/PlayerScenes/PlayerScene.tscn" id="2_luxqi"]
 
 [node name="Game" type="Node3D"]
 
@@ -36,9 +36,9 @@ offset_right = 161.0
 offset_bottom = 166.0
 text = "Host"
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="MainMenu"]
-_spawnable_scenes = PackedStringArray("res://src/level.tscn")
-spawn_path = NodePath("../../Levels")
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="MainMenu"]
+_spawnable_scenes = PackedStringArray("res://src/Scenes/PlayerScenes/PlayerScene.tscn", "res://src/Abilities/Ghost/Ghost.tscn", "res://src/Abilities/Ghost/GhostDisplay.tscn")
+spawn_path = NodePath("../../Levels/Players")
 
 [node name="Levels" type="Node3D" parent="."]
 
@@ -51,7 +51,9 @@ height = 0.002
 transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 25, 0)
 shadow_enabled = true
 
-[node name="MainCam" type="Camera3D" parent="Levels"]
+[node name="Players" type="Node3D" parent="Levels"]
+
+[node name="MainCam" type="Camera3D" parent="."]
 transform = Transform3D(-1, -8.74228e-08, 0, -6.35192e-08, 0.726575, 0.687087, -6.00671e-08, 0.687087, -0.726575, 0, 32.973, -43)
 fov = 46.1
 
