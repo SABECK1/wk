@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://blxonpuumhciy"]
 
 [ext_resource type="Script" path="res://src/Menu/MainMenu.gd" id="1_4epyi"]
-[ext_resource type="PackedScene" uid="uid://bahg8piforqi1" path="res://src/Scenes/PlayerScenes/PlayerScene.tscn" id="2_luxqi"]
+[ext_resource type="PackedScene" uid="uid://bbj33kkcxogja" path="res://src/Scenes/PlayerScenes/DummyPlayer.tscn" id="2_gel8b"]
 
 [node name="Game" type="Node3D"]
 
@@ -10,10 +10,14 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 105.0
+offset_top = -101.0
+offset_right = 105.0
+offset_bottom = -101.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4epyi")
-main_scene = ExtResource("2_luxqi")
+dummy_player = ExtResource("2_gel8b")
 
 [node name="Join" type="Button" parent="MainMenu"]
 layout_mode = 1
@@ -22,40 +26,76 @@ anchor_left = 0.03
 anchor_top = 0.038
 anchor_right = 0.03
 anchor_bottom = 0.038
-offset_left = 27.44
-offset_top = -6.624
-offset_right = 124.44
-offset_bottom = 64.376
+offset_left = 29.44
+offset_top = 96.376
+offset_right = 126.44
+offset_bottom = 167.376
 text = "Join"
 
 [node name="Host" type="Button" parent="MainMenu"]
 layout_mode = 0
-offset_left = 61.0
-offset_top = 103.0
-offset_right = 161.0
-offset_bottom = 166.0
+offset_left = 59.0
+offset_top = 208.0
+offset_right = 159.0
+offset_bottom = 271.0
 text = "Host"
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="MainMenu"]
-_spawnable_scenes = PackedStringArray("res://src/Scenes/PlayerScenes/PlayerScene.tscn", "res://src/Abilities/Ghost/Ghost.tscn", "res://src/Abilities/Ghost/GhostDisplay.tscn")
-spawn_path = NodePath("../../Levels/Players")
+_spawnable_scenes = PackedStringArray("res://src/Scenes/PlayerScenes/DummyPlayer.tscn")
+spawn_path = NodePath("../../MultiplayerLobby/Map/Players")
 
-[node name="Levels" type="Node3D" parent="."]
+[node name="Start" type="Button" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.038
+anchor_right = 0.03
+anchor_bottom = 0.038
+offset_left = 21.44
+offset_top = 256.376
+offset_right = 118.44
+offset_bottom = 327.376
+text = "Start"
 
-[node name="Ground" type="CSGCylinder3D" parent="Levels"]
-use_collision = true
-radius = 24.0
-height = 0.002
+[node name="MultiplayerLobby" type="Node3D" parent="."]
 
-[node name="Sun" type="DirectionalLight3D" parent="Levels"]
-transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 25, 0)
+[node name="Map" type="Node3D" parent="MultiplayerLobby"]
+
+[node name="Sun" type="DirectionalLight3D" parent="MultiplayerLobby/Map"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866026, 0, -0.866026, -0.5, 0, 25, -9)
 shadow_enabled = true
 
-[node name="Players" type="Node3D" parent="Levels"]
+[node name="Players" type="Node3D" parent="MultiplayerLobby/Map"]
 
-[node name="MainCam" type="Camera3D" parent="."]
-transform = Transform3D(-1, -8.74228e-08, 0, -6.35192e-08, 0.726575, 0.687087, -6.00671e-08, 0.687087, -0.726575, 0, 32.973, -43)
-fov = 46.1
+[node name="CSGBox3D" type="CSGBox3D" parent="MultiplayerLobby/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+size = Vector3(19, 1, 11)
+metadata/_edit_group_ = true
+
+[node name="Podium1" type="CSGCylinder3D" parent="MultiplayerLobby/Map/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, -3)
+radius = 2.0
+height = 4.0
+
+[node name="Podium2" type="CSGCylinder3D" parent="MultiplayerLobby/Map/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, -3)
+radius = 2.0
+height = 4.0
+
+[node name="Podium3" type="CSGCylinder3D" parent="MultiplayerLobby/Map/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -3)
+radius = 2.0
+height = 4.0
+
+[node name="Podium4" type="CSGCylinder3D" parent="MultiplayerLobby/Map/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1, -3)
+radius = 2.0
+height = 4.0
+
+[node name="MainCam" type="Camera3D" parent="MultiplayerLobby"]
+transform = Transform3D(-1, -8.74228e-08, 4.43028e-14, -8.50428e-08, 0.972776, 0.231747, -2.026e-08, 0.231747, -0.972776, 0, 10, -17.975)
+fov = 54.9623
 
 [connection signal="pressed" from="MainMenu/Join" to="MainMenu" method="_on_join_pressed"]
 [connection signal="pressed" from="MainMenu/Host" to="MainMenu" method="_on_host_pressed"]
+[connection signal="pressed" from="MainMenu/Start" to="MainMenu" method="_on_start_pressed"]

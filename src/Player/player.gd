@@ -2,7 +2,7 @@ extends Entity
 const RAY_LENGTH = 2000
 var ray_origin = Vector3()
 var ray_target = Vector3()
-@onready var cam = get_node("/root/Game/MainCam")
+@onready var cam = get_node("/root/MainMap/MainCam")
 #@onready var cam = get_node("/root/Game/Levels/MainCam")
 #@onready var cam = $MainCam
 
