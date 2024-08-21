@@ -2,9 +2,7 @@ extends Entity
 const RAY_LENGTH = 2000
 var ray_origin = Vector3()
 var ray_target = Vector3()
-@onready var cam = get_node("/root/MainMap/MainCam")
-#@onready var cam = get_node("/root/Game/Levels/MainCam")
-#@onready var cam = $MainCam
+@onready var cam = get_node("/root/Game/MultiplayerLobby/MainCam")
 
 
 	
@@ -12,6 +10,9 @@ var blink = load_ability("Blink", "ability_q", 10.0)
 var ghost = load_ability("Ghost", "ability_e", 2.0)
 
 var abilities = [blink, ghost]
+#
+#func _ready():
+	#set_multiplayer_authority(name.to_int())
 
 func _unhandled_input(event):
 	if event is InputEventKey:

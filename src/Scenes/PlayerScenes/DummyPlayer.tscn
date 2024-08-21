@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bbj33kkcxogja"]
+[gd_scene load_steps=6 format=3 uid="uid://chw36vtg2mhoy"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_iupbm"]
 
@@ -10,16 +10,10 @@ albedo_color = Color(0.686275, 0.027451, 0, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0g4wi"]
 albedo_color = Color(0, 0, 0, 1)
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_k7tsm"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vvafn"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("Body:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath(".:visible")
-properties/2/spawn = true
-properties/2/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.02719, 0)
@@ -37,4 +31,4 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_0g4wi")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_k7tsm")
+replication_config = SubResource("SceneReplicationConfig_vvafn")

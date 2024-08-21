@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://blxonpuumhciy"]
 
 [ext_resource type="Script" path="res://src/Menu/MainMenu.gd" id="1_4epyi"]
-[ext_resource type="PackedScene" uid="uid://bbj33kkcxogja" path="res://src/Scenes/PlayerScenes/DummyPlayer.tscn" id="2_gel8b"]
+[ext_resource type="PackedScene" uid="uid://bahg8piforqi1" path="res://src/Scenes/PlayerScenes/PlayerScene.tscn" id="2_lq7fa"]
 
 [node name="Game" type="Node3D"]
 
@@ -17,7 +17,7 @@ offset_bottom = -101.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4epyi")
-dummy_player = ExtResource("2_gel8b")
+dummy_player = ExtResource("2_lq7fa")
 
 [node name="Join" type="Button" parent="MainMenu"]
 layout_mode = 1
@@ -41,7 +41,7 @@ offset_bottom = 271.0
 text = "Host"
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="MainMenu"]
-_spawnable_scenes = PackedStringArray("res://src/Scenes/PlayerScenes/DummyPlayer.tscn")
+_spawnable_scenes = PackedStringArray("res://src/Scenes/PlayerScenes/PlayerScene.tscn")
 spawn_path = NodePath("../../MultiplayerLobby/Map/Players")
 
 [node name="Start" type="Button" parent="MainMenu"]
