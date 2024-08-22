@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 PlayerVariables="*res://src/Global/PlayerVariables.gd"
 LobbyPlayers="*res://src/Player/LobbyPlayers.gd"
+GlobalSteam="*res://src/Global/Steam.gd"
 
 [input]
 
