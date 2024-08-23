@@ -27,5 +27,3 @@ func use_ability(userRef, mouse_coords):
 		
 	set_on_cooldown()
 	
-
-

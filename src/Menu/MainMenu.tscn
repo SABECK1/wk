@@ -40,6 +40,7 @@ _spawnable_scenes = PackedStringArray("res://src/Scenes/PlayerScenes/PlayerScene
 spawn_path = NodePath("../../MultiplayerLobby/Map/Players")
 
 [node name="Start" type="Button" parent="MainMenu"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.03
@@ -108,18 +109,20 @@ size_flags_vertical = 6
 alignment = 1
 
 [node name="Chat" type="Panel" parent="MainMenu"]
+visible = false
 layout_mode = 0
 offset_left = 8.0
 offset_top = 408.0
 offset_right = 264.0
 offset_bottom = 588.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MainMenu/Chat"]
+[node name="ChatContent" type="RichTextLabel" parent="MainMenu/Chat"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 252.0
+offset_bottom = 176.0
 
 [node name="Send" type="Button" parent="MainMenu"]
+visible = false
 layout_mode = 0
 offset_left = 272.0
 offset_top = 600.0
@@ -178,3 +181,5 @@ fov = 54.9623
 [connection signal="pressed" from="MainMenu/Join" to="MainMenu" method="_on_join_pressed"]
 [connection signal="pressed" from="MainMenu/Host" to="MainMenu" method="_on_host_pressed"]
 [connection signal="pressed" from="MainMenu/Start" to="MainMenu" method="_on_start_pressed"]
+[connection signal="pressed" from="MainMenu/LobbyList/Panel/CloseLobbyList" to="MainMenu" method="_on_close_lobby_list_pressed"]
+[connection signal="pressed" from="MainMenu/Send" to="MainMenu" method="_on_send_pressed"]

@@ -33,4 +33,3 @@ func get_trigger():
 func get_ref(node_path):
 	return get_node(node_path)
 	
-

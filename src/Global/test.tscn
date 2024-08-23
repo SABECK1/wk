@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://cttqgd81bmf25"]
+
+[node name="Test" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LobbyList" type="PopupPanel" parent="."]
+auto_translate_mode = 1
+mode = 1
+initial_position = 2
+size = Vector2i(700, 450)
+visible = true
+
+[node name="Panel" type="Panel" parent="LobbyList"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 696.0
+offset_bottom = 446.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LobbyListLabel" type="Label" parent="LobbyList"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 696.0
+offset_bottom = 446.0
+text = "Lobby List"
+
+[node name="CloseLobbyList" type="Button" parent="LobbyList"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 696.0
+offset_bottom = 446.0
+text = "Close Lobby List"
+
+[node name="LobbyListScroll" type="ScrollContainer" parent="LobbyList"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 696.0
+offset_bottom = 446.0
+
+[node name="LobbyListVBOX" type="VBoxContainer" parent="LobbyList/LobbyListScroll"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+alignment = 1
