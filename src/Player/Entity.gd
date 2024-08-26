@@ -1,8 +1,8 @@
 extends CharacterBody3D
 class_name Entity
 #
-func _enter_tree():
-	set_multiplayer_authority(name.to_int())
+#func _enter_tree():
+	#set_multiplayer_authority(name.to_int())
 
 func load_ability(name : String, use_key : String, cooldown_value : float):
 	var scene = load("res://src/Abilities/" + name + "/" + name + ".tscn")
