@@ -15,8 +15,10 @@ var LOBBY_INVITE_ARG = false
 func _init():
 	OS.set_environment("SteamAppID", APP_ID)
 	OS.set_environment("SteamGameID", APP_ID)
+	initialize_steam()
 #
 func initialize_steam():
+	Steam.steamInit()
 	var initialize_response: Dictionary = Steam.steamInitEx()
 	print("Did Steam Initialize?: %s " % initialize_response)
 	

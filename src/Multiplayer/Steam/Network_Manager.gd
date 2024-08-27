@@ -26,7 +26,7 @@ func _build_multiplayer_network():
 			print("Networktype = STEAM")
 			username.hide()
 			_set_active_network(steam_network)
-			GlobalSteam.initialize_steam()
+			
 
 func _set_active_network(active_network_scene):
 	var network_scene_initialized = active_network_scene.instantiate()
@@ -51,9 +51,10 @@ func join_lobby(lobby_id = 0) -> void:
 func send_message(message = '') -> void:
 	_build_multiplayer_network()
 	#if active_network_type == MULTIPLAYER_NETWORK_TYPE.ENET:
-	active_network.send_message.rpc(username.text, message)
+	#active_network.send_message.rpc(username.text, message)
 	#else:
-		#active_network.send_message(username.text, message)
+	#Username.txt ist Überbleibsel von P2P
+	active_network.send_message(username.text, message)
 	
 
 #func list_lobbies():
