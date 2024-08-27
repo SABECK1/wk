@@ -18,7 +18,8 @@ func  _ready():
 	Steam.lobby_joined.connect(_on_lobby_joined)
 	Steam.lobby_message.connect(_on_lobby_message)
 	Steam.lobby_chat_update.connect(_on_lobby_chat_update)
-
+	Steam.join_requested.connect(_on_lobby_join_requested)
+	check_command_line()
 	
 	
 func host():
@@ -81,19 +82,7 @@ func list_lobbies():
 	Steam.addRequestLobbyListStringFilter("name", "Ventior", Steam.LOBBY_COMPARISON_EQUAL)
 	Steam.requestLobbyList()
 
-func _add_player_to_game(id: int):
-	print("Player %s joined the game!" % id)
-	
-	var player_to_add = multiplayer_scene.instantiate()
-	player_to_add.name = str(id)
-	
-	_players_spawn_node.add_child(player_to_add, true)
-	
-func _del_player(id: int):
-	print("Player %s left the game!" % id)
-	if not _players_spawn_node.has_node(str(id)):
-		return
-	_players_spawn_node.get_node(str(id)).queue_free()
+
 	
 func display_message(message) -> void:
 	chat.add_text("\n" + str(message))
@@ -101,6 +90,15 @@ func display_message(message) -> void:
 func _on_lobby_message(result, user, message, type) -> void:
 	var sender = Steam.getFriendPersonaName(user)
 	display_message(str(sender) + ":" + str(message))
+
+func _on_lobby_join_requested(this_lobby_id: int, friend_id: int) -> void:
+	# Get the lobby owner's name
+	var owner_name: String = Steam.getFriendPersonaName(friend_id)
+
+	print("Joining %s's lobby..." % owner_name)
+
+	# Attempt to join the lobby
+	join(this_lobby_id)
 
 #Statusinfo not chat message
 @rpc("any_peer", "call_local")
@@ -141,3 +139,35 @@ func _on_lobby_chat_update(this_lobby_id: int, change_id: int, making_change_id:
 
 	# Update the lobby now that a change has occurred
 	#get_lobby_members()
+	
+func _add_player_to_game(id: int):
+	print("Player %s joined the game!" % id)
+	
+	var player_to_add = multiplayer_scene.instantiate()
+	player_to_add.name = str(id)
+	
+	_players_spawn_node.add_child(player_to_add, true)
+	
+func _del_player(id: int):
+	print("Player %s left the game!" % id)
+	if not _players_spawn_node.has_node(str(id)):
+		return
+	_players_spawn_node.get_node(str(id)).queue_free()
+
+
+func check_command_line() -> void:
+	var these_arguments: Array = OS.get_cmdline_args()
+
+	# There are arguments to process
+	if these_arguments.size() > 0:
+
+		# A Steam connection argument exists
+		if these_arguments[0] == "+connect_lobby":
+
+			# Lobby invite exists so try to connect to it
+			if int(these_arguments[1]) > 0:
+
+				# At this point, you'll probably want to change scenes
+				# Something like a loading into lobby screen
+				print("Command line lobby ID: %s" % these_arguments[1])
+				join(int(these_arguments[1]))
