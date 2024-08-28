@@ -9,8 +9,11 @@ var PACKET_READ_LIMIT = 5
 # Lobby Variables
 var DATA
 var LOBBY_ID = 0
-var LOBBY_MEMBER = []
+
 var LOBBY_INVITE_ARG = false
+var LOBBY_MEMBERS: Array = []
+
+@onready var SPAWN_PLATFORM = get_node("/root/Game/MultiplayerLobby/Map/CSGBox3D").get_children()
 #
 func _init():
 	OS.set_environment("SteamAppID", APP_ID)
@@ -24,7 +27,7 @@ func initialize_steam():
 	
 	if initialize_response['status'] > 0:
 		print("Failed to init Steam! Shutting down. %s" % initialize_response)
-		get_tree().quit()
+		#get_tree().quit()
 		
 	OWNED = Steam.isSubscribed()
 	STEAM_ID = Steam.getSteamID()
@@ -36,6 +39,7 @@ func initialize_steam():
 		print("User does not own game!")
 		get_tree().quit()
 		
-		
+
+
 func _process(delta):
 	Steam.run_callbacks()

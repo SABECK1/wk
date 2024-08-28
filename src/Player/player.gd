@@ -4,7 +4,9 @@ var ray_origin = Vector3()
 var ray_target = Vector3()
 @onready var cam = get_node("/root/Game/MultiplayerLobby/MainCam")
 
-var placeholder_name
+var placeholder_name: String
+var steam_id: int
+var is_host: bool
 
 
 	

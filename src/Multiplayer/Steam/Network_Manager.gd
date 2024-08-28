@@ -48,6 +48,10 @@ func join_lobby(lobby_id = 0) -> void:
 	_build_multiplayer_network()
 	active_network.join(lobby_id)
 	
+func leave() -> void:
+	_build_multiplayer_network()
+	active_network.leave_lobby()
+	
 func send_message(message = '') -> void:
 	_build_multiplayer_network()
 	#if active_network_type == MULTIPLAYER_NETWORK_TYPE.ENET:
@@ -60,3 +64,13 @@ func send_message(message = '') -> void:
 #func list_lobbies():
 	#_build_multiplayer_network()
 	#active_network.list_lobbies()
+
+# Für Peers + Host -> Keine bessere Möglichkeit gefunden
+func _on_player_spawner_spawned(node: Node) -> void:
+	_build_multiplayer_network()
+	active_network.position_players(node)
+
+# Für Host
+func _on_players_child_entered_tree(node: Node) -> void:
+	_build_multiplayer_network()
+	active_network.position_players(node)
