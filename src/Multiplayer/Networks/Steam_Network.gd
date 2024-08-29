@@ -127,6 +127,9 @@ func toggle_ready():
 	
 	if all_ready == true:
 		$StartGameTimer.start()
+	else:
+		$StartGameTimer.stop()
+		timer_count = 3
 		
 
 func _on_start_game_timer_timeout() -> void:
