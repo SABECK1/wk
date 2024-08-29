@@ -4,14 +4,18 @@ extends Node
 var _hosted_lobby_id = 0
 var lobby_id = 0
 
-@onready var chat = get_node("/root/Game/MainMenu/LobbyHUD/Chat/ChatContent")
+@onready var chat := get_node("/root/Game/MainMenu/LobbyHUD/Chat/ChatContent")
+@onready var timer := get_node("/StartGameTimer")
 
-var multiplayer_scene = preload("res://src/Scenes/PlayerScenes/PlayerScene.tscn")
+var multiplayer_scene := preload("res://src/Scenes/PlayerScenes/PlayerScene.tscn")
 var multiplayer_peer: SteamMultiplayerPeer = SteamMultiplayerPeer.new()
 var _players_spawn_node: Node3D
 
-const LOBBY_NAME = "Ventior"
-const LOBBY_MODE = "CoOP"
+
+const LOBBY_NAME := "Ventior"
+const LOBBY_MODE := "CoOP"
+
+var timer_count := 3
 
 
 func  _ready():
@@ -122,8 +126,13 @@ func toggle_ready():
 			all_ready = false
 	
 	if all_ready == true:
-		%StartGameTimer.start()
+		$StartGameTimer.start()
 		
+
+func _on_start_game_timer_timeout() -> void:
+	timer_count -= 1
+	add_message("Game starting in %d seconds" % timer_count)
+
 
 func _on_lobby_data_update(success, lobbyID, memberID):
 	print("Update")
@@ -182,6 +191,8 @@ func leave_lobby() -> void:
 
 		# Clear the local lobby list
 		GlobalSteam.LOBBY_MEMBERS.clear()
+		for player in _players_spawn_node.get_children():
+			player.queue_free()
 
 		
 

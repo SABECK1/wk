@@ -4,3 +4,5 @@
 
 [node name="EnetNetwork" type="Node"]
 script = ExtResource("1_bywa8")
+
+[node name="StartGameTimer" type="Timer" parent="."]

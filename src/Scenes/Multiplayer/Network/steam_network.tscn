@@ -4,3 +4,7 @@
 
 [node name="SteamNetwork" type="Node"]
 script = ExtResource("1_77wam")
+
+[node name="StartGameTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="StartGameTimer" to="." method="_on_start_game_timer_timeout"]
