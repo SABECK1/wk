@@ -4,16 +4,17 @@ extends Node
 var _hosted_lobby_id = 0
 var lobby_id = 0
 
-@onready var chat := get_node("/root/Game/MainMenu/LobbyHUD/Chat/ChatContent")
-@onready var timer := get_node("/StartGameTimer")
-@onready var root := get_node("/root/Game")
-@onready var lobby := get_node("/root/Game/MultiplayerLobby")
-@onready var menu := get_node("/root/Game/MainMenu")
+@onready var chat := get_node_or_null("/root/Game/MainMenu/LobbyHUD/Chat/ChatContent")
+@onready var timer := get_node_or_null("/StartGameTimer")
+@onready var root := get_node_or_null("/root/Game")
+@onready var lobby := get_node_or_null("/root/Game/MultiplayerLobby")
+@onready var menu := get_node_or_null("/root/Game/MainMenu")
 
 var multiplayer_scene := preload("res://src/Scenes/PlayerScenes/PlayerScene.tscn")
 var multiplayer_peer: SteamMultiplayerPeer = SteamMultiplayerPeer.new()
 var _players_spawn_node: Node3D
 var game_scene := preload("res://src/Scenes/Maps/MainMap.tscn")
+var lobby_members = []
 
 
 const LOBBY_NAME := "Ventior"
@@ -44,7 +45,7 @@ func host():
 	
 func join(lobby_id):
 	print("Joining lobby %s" % lobby_id)
-	GlobalSteam.LOBBY_MEMBERS.clear()
+	lobby_members.clear()
 	multiplayer_peer.connect_lobby(lobby_id)
 	multiplayer.multiplayer_peer = multiplayer_peer
 	
@@ -96,7 +97,7 @@ func list_lobbies():
 
 func get_lobby_members() -> void:
 	# Clear your previous lobby list
-	GlobalSteam.LOBBY_MEMBERS.clear()
+	lobby_members.clear()
 
 	# Get the number of members from this lobby from Steam
 	var num_of_members: int = Steam.getNumLobbyMembers(lobby_id)
@@ -109,16 +110,17 @@ func get_lobby_members() -> void:
 		# Get the member's Steam name
 		var member_steam_name: String = Steam.getFriendPersonaName(member_steam_id)
 		
-		GlobalSteam.LOBBY_MEMBERS.append({"steam_id":member_steam_id, 
+		lobby_members.append({"steam_id":member_steam_id, 
 						  "steam_name":member_steam_name,
 						  "player": null,
 						  "position": GlobalSteam.SPAWN_PLATFORM[this_member],
 						  "ready": false})
-
-func toggle_ready():
-	var all_ready = true		
-	for member in GlobalSteam.LOBBY_MEMBERS:
-		if member["steam_id"] == GlobalSteam.STEAM_ID:
+						
+@rpc("any_peer", "call_local")	
+func toggle_ready(sender_id):		
+	var all_ready = true	
+	for member in lobby_members:
+		if member["steam_id"] == sender_id:
 			member["ready"] = !member["ready"]
 			# Check nach Änderung
 			if member["ready"] == true:
@@ -128,18 +130,27 @@ func toggle_ready():
 		# Check ob alle Member ready sind
 		if member["ready"] != true:
 			all_ready = false
-	
+			
 	if all_ready == true:
-		$StartGameTimer.start()
+		start_timer.rpc()
 	else:
-		$StartGameTimer.stop()
-		timer_count = 3
+		stop_timer.rpc()
 		
 
+	
+@rpc("any_peer", "call_local")	
+func start_timer() -> void:
+	$StartGameTimer.start()
+	
+@rpc("any_peer", "call_local")
+func stop_timer() -> void:
+	$StartGameTimer.stop()
+	timer_count = 3
+	
 func _on_start_game_timer_timeout() -> void:
-	add_message("Game starting in %d seconds" % timer_count)
+	add_message.rpc("Game starting in %d seconds" % timer_count)
 	if timer_count == 0:
-		add_message("Starting Game, please wait...")
+		add_message.rpc("Starting Game, please wait...")
 		$StartGameTimer.stop()
 		start_game()
 		return
@@ -149,8 +160,23 @@ func _on_start_game_timer_timeout() -> void:
 func start_game():
 	# Instantiate Game Scene
 	root.add_child(game_scene.instantiate())
+	
+	# Hide menus
 	menu.hide()
 	lobby.hide()
+	
+	# Change cameras
+	set_players_camera()
+
+func move_players(parent_node, new_parent) -> void:
+	for player in parent_node:
+		parent_node.remove_child(player)
+		new_parent.add_child(player)
+
+func set_players_camera():
+	for player in _players_spawn_node.get_children():
+		player.cam = get_node("/root/Game/MainMap/MainCam")
+		player.cam.make_current()
 
 func _on_lobby_data_update(success, lobbyID, memberID):
 	print("Update")
@@ -159,7 +185,7 @@ func _on_lobby_data_update(success, lobbyID, memberID):
 func position_players(player):
 	get_lobby_members()
 	var host = Steam.getLobbyOwner(lobby_id)
-	for member in GlobalSteam.LOBBY_MEMBERS:
+	for member in lobby_members:
 		if member["steam_id"] == host:
 			if player.name == "1":
 				member["player"] == player
@@ -200,7 +226,7 @@ func leave_lobby() -> void:
 		lobby_id = 0
 
 		# Close session with all users
-		for this_member in GlobalSteam.LOBBY_MEMBERS:
+		for this_member in lobby_members:
 			# Make sure this isn't your Steam ID
 			if this_member['steam_id'] != GlobalSteam.STEAM_ID:
 
@@ -208,7 +234,7 @@ func leave_lobby() -> void:
 				Steam.closeP2PSessionWithUser(this_member['steam_id'])
 
 		# Clear the local lobby list
-		GlobalSteam.LOBBY_MEMBERS.clear()
+		lobby_members.clear()
 		for player in _players_spawn_node.get_children():
 			player.queue_free()
 

@@ -9,13 +9,13 @@ enum search_distance {Close, Default, Far, WorldWide}
 @onready var chatInputGroup = %LobbyHUD/Send
 @onready var multiplayerHud = %LobbyHUD
 @onready var lobbyPanel = $LobbyList
-@onready var lobby = get_node("/root/Game/MultiplayerLobby")
+@onready var lobby = get_node_or_null("/root/Game/MultiplayerLobby")
 
 ##LOBBY##
 @onready var MainMenu = self 
 @export var dummy_player: PackedScene 
 #@export var _player_spawn_node: Node3D
-@onready var _player_spawn_node = get_node("/root/Game/MultiplayerLobby/Map/Players")
+@onready var _player_spawn_node = get_node_or_null("/root/Game/MultiplayerLobby/Map/Players")
 
 const PACKET_READ_LIMIT: int = 32
 
@@ -62,7 +62,7 @@ func _on_leave_pressed() -> void:
 	%LobbyHUD.hide()
 	
 func _on_start_pressed() -> void:
-	%Network_Manager.toggle_ready()
+	%Network_Manager.toggle_ready(GlobalSteam.STEAM_ID)
 	
 	
 #####################################################################		

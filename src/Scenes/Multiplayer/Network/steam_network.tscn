@@ -1,10 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://bjnro67ttchsa"]
+[gd_scene load_steps=3 format=3 uid="uid://bjnro67ttchsa"]
 
 [ext_resource type="Script" path="res://src/Multiplayer/Networks/Steam_Network.gd" id="1_77wam"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vwrdx"]
+properties/0/path = NodePath("SteamNetwork:lobby_members")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [node name="SteamNetwork" type="Node"]
 script = ExtResource("1_77wam")
 
 [node name="StartGameTimer" type="Timer" parent="."]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_vwrdx")
 
 [connection signal="timeout" from="StartGameTimer" to="." method="_on_start_game_timer_timeout"]

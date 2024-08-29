@@ -2,7 +2,7 @@ extends Entity
 const RAY_LENGTH = 2000
 var ray_origin = Vector3()
 var ray_target = Vector3()
-@onready var cam = get_node("/root/Game/MultiplayerLobby/MainCam")
+@onready var cam: Camera3D
 
 var placeholder_name: String
 var steam_id: int
@@ -18,6 +18,11 @@ var abilities = [blink, ghost]
 func _ready():
 	if get_parent_node_3d().name == "DummyPlayers":
 		can_move = false
+		cam = get_node("/root/Game/MultiplayerLobby/MainCam")
+	else:
+		can_move = true
+		
+	cam.make_current()
 	set_multiplayer_authority(name.to_int())
 
 func _unhandled_input(event):
