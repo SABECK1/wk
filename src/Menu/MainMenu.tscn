@@ -106,6 +106,7 @@ alignment = 1
 
 [node name="LobbyHUD" type="Control" parent="MainMenu"]
 unique_name_in_owner = true
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -166,6 +167,7 @@ offset_bottom = 157.48
 text = "Leave Lobby"
 
 [node name="Username" type="TextEdit" parent="MainMenu"]
+visible = false
 layout_mode = 0
 offset_left = 169.0
 offset_top = 23.0

@@ -7,7 +7,9 @@ enum MULTIPLAYER_NETWORK_TYPE {ENET, STEAM}
 var active_network_type: MULTIPLAYER_NETWORK_TYPE = MULTIPLAYER_NETWORK_TYPE.STEAM
 var enet_network := preload("res://src/Scenes/Multiplayer/Network/enet_network.tscn")
 var steam_network := preload("res://src/Scenes/Multiplayer/Network/steam_network.tscn")
-var active_network
+var active_network: Node
+
+var startgametimer := preload("res://src/Multiplayer/Scenes/TimerScene.tscn") 
 
 
 
@@ -33,6 +35,10 @@ func _set_active_network(active_network_scene):
 	active_network = network_scene_initialized
 	active_network._players_spawn_node = _players_spawn_node
 	add_child(active_network)
+	
+	# In order to have the timer for both networks, it is 
+	# added as a child instead of manually in the nodes
+	active_network.add_child(startgametimer.instantiate())
 
 func host() -> void:
 	_build_multiplayer_network()
@@ -74,3 +80,7 @@ func _on_player_spawner_spawned(node: Node) -> void:
 func _on_players_child_entered_tree(node: Node) -> void:
 	_build_multiplayer_network()
 	active_network.position_players(node)
+	
+func toggle_ready() -> void:
+	_build_multiplayer_network()
+	active_network.toggle_ready()

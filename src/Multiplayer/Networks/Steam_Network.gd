@@ -104,23 +104,31 @@ func get_lobby_members() -> void:
 		GlobalSteam.LOBBY_MEMBERS.append({"steam_id":member_steam_id, 
 						  "steam_name":member_steam_name,
 						  "player": null,
-						  "position": GlobalSteam.SPAWN_PLATFORM[this_member]})
-		#var player
-		#if member_steam_id == Steam.getLobbyOwner(lobby_id):
-			#player = _players_spawn_node.get_node_or_null("1")
-			#if player == null and GlobalSteam.STEAM_ID == Steam.getLobbyOwner(lobby_id):
-				#player = _add_player_to_game(1)
-		#else:
-			#if player == null:
-				#player = _add_player_to_game(member_steam_id)
-			#player = _players_spawn_node.get_node_or_null(str(member_steam_id))
-		
-		
-		
+						  "position": GlobalSteam.SPAWN_PLATFORM[this_member],
+						  "ready": false})
+
+func toggle_ready():
+	var all_ready = true		
+	for member in GlobalSteam.LOBBY_MEMBERS:
+		if member["steam_id"] == GlobalSteam.STEAM_ID:
+			member["ready"] = !member["ready"]
+			# Check nach Änderung
+			if member["ready"] == true:
+				add_message("%s is now ready!" % member["steam_name"])
+			else:
+				add_message("%s is no longer ready!" % member["steam_name"])
+		# Check ob alle Member ready sind
+		if member["ready"] != true:
+			all_ready = false
 	
+	if all_ready == true:
+		%StartGameTimer.start()
+		
+
 func _on_lobby_data_update(success, lobbyID, memberID):
 	print("Update")
-	#_position_members()					
+	
+			
 func position_players(player):
 	get_lobby_members()
 	var host = Steam.getLobbyOwner(lobby_id)
@@ -134,17 +142,6 @@ func position_players(player):
 		if str(member["steam_id"]) == player.name:
 			member["player"] == player	
 		
-			
-		#if member["steam_id"] == Steam.getLobbyOwner(lobby_id):
-			#if _players_spawn_node.get_node_or_null("1"):
-				#member["player"] = _players_spawn_node.get_node("1")
-			#else:
-				#member["player"] = _add_player_to_game(1)
-		#else:
-			#if _players_spawn_node.get_node_or_null(str(member["steam_id"])):
-				#member["player"] = _players_spawn_node.get_node(member["steam_id"])
-			#else:
-				#member["player"] = _add_player_to_game(member["steam_id"])
 		var platform = member["position"]
 		player.position = platform.position + Vector3(0, 3, 5)
 		player.look_at(player.position + Vector3(-1, 0, 0), Vector3.UP)
@@ -186,20 +183,6 @@ func leave_lobby() -> void:
 		# Clear the local lobby list
 		GlobalSteam.LOBBY_MEMBERS.clear()
 
-#func spawn_players():
-	#for user in lobby_members:
-		#var id = user["steam_id"]
-		#if user["player"] == null:
-			#if id == Steam.getLobbyOwner(lobby_id):
-				#await _add_player_to_game.rpc(1)
-			#else:
-				#await _add_player_to_game.rpc(user["steam_id"])
-				
-
-#Position Players
-#@rpc("any_peer", "call_local")
-#func position_members():
-
 		
 
 #Statusinfo not chat message
@@ -212,13 +195,13 @@ func send_message(user, message) -> void:
 	if not isSent:
 		display_message("ERROR: Chat message failed to deliver")
 
-#func _on_persona_change(this_steam_id: int, _flag: int) -> void:
-	## Make sure you're in a lobby and this user is valid or Steam might spam your console log
-	#if lobby_id > 0:
-		#print("A user (%s) had information change, update the lobby list" % this_steam_id)
-#
-		## Update the player list
-		#get_lobby_members()
+func _on_persona_change(this_steam_id: int, _flag: int) -> void:
+	# Make sure you're in a lobby and this user is valid or Steam might spam your console log
+	if lobby_id > 0:
+		print("A user (%s) had information change, update the lobby list" % this_steam_id)
+
+		# Update the player list
+		get_lobby_members()
 
 func _on_lobby_chat_update(this_lobby_id: int, change_id: int, making_change_id: int, chat_state: int) -> void:
 	# Get the user who has made the lobby change
@@ -247,7 +230,7 @@ func _on_lobby_chat_update(this_lobby_id: int, change_id: int, making_change_id:
 		add_message("%s did... something." % changer_name)
 
 	# Update the lobby now that a change has occurred
-	#get_lobby_members()
+	get_lobby_members()
 
 #@rpc("any_peer", "call_local")
 func _add_player_to_game(id: int):

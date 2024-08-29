@@ -14,7 +14,7 @@ var LOBBY_INVITE_ARG = false
 var LOBBY_MEMBERS: Array = []
 
 @onready var SPAWN_PLATFORM = get_node("/root/Game/MultiplayerLobby/Map/CSGBox3D").get_children()
-#
+
 func _init():
 	OS.set_environment("SteamAppID", APP_ID)
 	OS.set_environment("SteamGameID", APP_ID)
@@ -37,7 +37,7 @@ func initialize_steam():
 	
 	if OWNED == false:
 		print("User does not own game!")
-		get_tree().quit()
+		#get_tree().quit()
 		
 
 
