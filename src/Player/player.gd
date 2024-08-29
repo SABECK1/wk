@@ -8,7 +8,7 @@ var placeholder_name: String
 var steam_id: int
 var is_host: bool
 
-
+var can_move := true
 	
 var blink = load_ability("Blink", "ability_q", 10.0)
 var ghost = load_ability("Ghost", "ability_e", 2.0)
@@ -16,6 +16,8 @@ var ghost = load_ability("Ghost", "ability_e", 2.0)
 var abilities = [blink, ghost]
 #
 func _ready():
+	if get_parent_node_3d().name == "DummyPlayers":
+		can_move = false
 	set_multiplayer_authority(name.to_int())
 
 func _unhandled_input(event):
@@ -24,7 +26,7 @@ func _unhandled_input(event):
 			if InputMap.action_has_event(action, event):
 				for ability in abilities:
 					if ability.get_trigger() == action:
-						if not is_multiplayer_authority():
+						if not is_multiplayer_authority() or not can_move:
 							return
 						ability.use_ability.rpc(self.get_path(), get_cursor())
 
@@ -46,7 +48,7 @@ func get_cursor():
 var speed = PlayerVariables.speed
 
 func _physics_process(delta):
-	if not is_multiplayer_authority():
+	if not is_multiplayer_authority() or not can_move:
 		return
 	var mouse_coordinates = get_cursor()
 

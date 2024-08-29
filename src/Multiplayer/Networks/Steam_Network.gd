@@ -6,10 +6,14 @@ var lobby_id = 0
 
 @onready var chat := get_node("/root/Game/MainMenu/LobbyHUD/Chat/ChatContent")
 @onready var timer := get_node("/StartGameTimer")
+@onready var root := get_node("/root/Game")
+@onready var lobby := get_node("/root/Game/MultiplayerLobby")
+@onready var menu := get_node("/root/Game/MainMenu")
 
 var multiplayer_scene := preload("res://src/Scenes/PlayerScenes/PlayerScene.tscn")
 var multiplayer_peer: SteamMultiplayerPeer = SteamMultiplayerPeer.new()
 var _players_spawn_node: Node3D
+var game_scene := preload("res://src/Scenes/Maps/MainMap.tscn")
 
 
 const LOBBY_NAME := "Ventior"
@@ -137,10 +141,16 @@ func _on_start_game_timer_timeout() -> void:
 	if timer_count == 0:
 		add_message("Starting Game, please wait...")
 		$StartGameTimer.stop()
+		start_game()
 		return
 	
 	timer_count -= 1
 
+func start_game():
+	# Instantiate Game Scene
+	root.add_child(game_scene.instantiate())
+	menu.hide()
+	lobby.hide()
 
 func _on_lobby_data_update(success, lobbyID, memberID):
 	print("Update")
