@@ -130,8 +130,13 @@ func toggle_ready():
 		
 
 func _on_start_game_timer_timeout() -> void:
-	timer_count -= 1
 	add_message("Game starting in %d seconds" % timer_count)
+	if timer_count == 0:
+		add_message("Starting Game, please wait...")
+		$StartGameTimer.stop()
+		return
+	
+	timer_count -= 1
 
 
 func _on_lobby_data_update(success, lobbyID, memberID):
@@ -193,6 +198,7 @@ func leave_lobby() -> void:
 		GlobalSteam.LOBBY_MEMBERS.clear()
 		for player in _players_spawn_node.get_children():
 			player.queue_free()
+
 
 		
 

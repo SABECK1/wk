@@ -59,10 +59,11 @@ func _on_send_pressed() -> void:
 
 func _on_leave_pressed() -> void:
 	%Network_Manager.leave()
+	%LobbyHUD.hide()
 	
 func _on_start_pressed() -> void:
 	%Network_Manager.toggle_ready()
-	%LobbyHUD.hide()
+	
 	
 #####################################################################		
 func _on_lobby_match_list(these_lobbies: Array) -> void:
