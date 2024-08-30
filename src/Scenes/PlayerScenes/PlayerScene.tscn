@@ -28,7 +28,7 @@ mesh = SubResource("CapsuleMesh_iupbm")
 surface_material_override/0 = SubResource("StandardMaterial3D_eh1br")
 
 [node name="Staff" type="MeshInstance3D" parent="Body"]
-transform = Transform3D(0.00589102, 0.918531, -0.00152891, 3.1016e-12, -0.00589261, -0.239053, -0.10657, 0.050775, -8.45157e-05, 0.00171305, 0.425319, 0.498545)
+transform = Transform3D(0.00589102, 0.918531, -0.00152891, 3.1016e-12, -0.00589261, -0.239053, -0.10657, 0.050775, -8.45157e-05, 0.00171314, 0.425319, -0.501455)
 mesh = SubResource("CylinderMesh_gacmo")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_0g4wi")

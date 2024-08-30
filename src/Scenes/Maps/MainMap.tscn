@@ -16,5 +16,5 @@ shadow_enabled = true
 [node name="Players" type="Node3D" parent="Map"]
 
 [node name="MainCam" type="Camera3D" parent="."]
-transform = Transform3D(-1, -8.74228e-08, 0, -6.35192e-08, 0.726575, 0.687087, -6.00671e-08, 0.687087, -0.726575, 0, 32.973, -43)
+transform = Transform3D(1.5849e-07, 0.687087, -0.726575, -6.35192e-08, 0.726575, 0.687087, 1, -6.27449e-08, 1.58798e-07, -45, 32.973, -2)
 fov = 46.1

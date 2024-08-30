@@ -167,11 +167,13 @@ func start_game():
 	
 	# Change cameras
 	set_players_camera()
+	move_players(_players_spawn_node, get_node_or_null("/root/Game/MainMap/Map/Players"))
 
-func move_players(parent_node, new_parent) -> void:
-	for player in parent_node:
+func move_players(parent_node: Node, new_parent: Node) -> void:
+	for player in parent_node.get_children():
 		parent_node.remove_child(player)
 		new_parent.add_child(player)
+		player.can_move = true
 
 func set_players_camera():
 	for player in _players_spawn_node.get_children():
@@ -197,7 +199,7 @@ func position_players(player):
 		
 		var platform = member["position"]
 		player.position = platform.position + Vector3(0, 3, 5)
-		player.look_at(player.position + Vector3(-1, 0, 0), Vector3.UP)
+		player.look_at(player.position + Vector3(1, 0, 0), Vector3.UP)
 
 	
 func display_message(message) -> void:
