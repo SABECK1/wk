@@ -12,7 +12,7 @@ func use_ability(userRef, mouse_coords):
 	var user = get_node(userRef)
 	# Ghost should spawn at User location
 	g.position = user.position
-	g.configure(user, mouse_coords.position - user.position)
+	g.configure_entity(user, mouse_coords.position - user.position)
 	
 	get_node("/root/Game/MainMap/Map/Players").add_child(g)
 	set_on_cooldown()

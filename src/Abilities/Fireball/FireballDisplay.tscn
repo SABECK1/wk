@@ -1,6 +1,38 @@
-[gd_scene load_steps=2 format=3 uid="uid://ogfm2ebwsgf8"]
+[gd_scene load_steps=8 format=3 uid="uid://ogfm2ebwsgf8"]
 
 [ext_resource type="Script" path="res://src/Abilities/Fireball/FireballDisplay.gd" id="1_kvfhi"]
+[ext_resource type="Shader" uid="uid://b4yupkfr2p0" path="res://src/Assets/Shaders/FireballShader.tres" id="2_ax777"]
+[ext_resource type="Shader" uid="uid://daokpw8vmhipl" path="res://src/Assets/Shaders/FireHeader_Shader.tres" id="3_71fiy"]
 
-[node name="FireballDisplay" type="Node3D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yrhou"]
+render_priority = 0
+shader = ExtResource("2_ax777")
+shader_parameter/Fire_Color = Color(0.940103, 0.558067, 0.265695, 1)
+shader_parameter/Speed = Vector2(0.1, 3)
+
+[sub_resource type="SphereMesh" id="SphereMesh_kcqu4"]
+radius = 1.2
+height = 2.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yt5k8"]
+render_priority = 0
+shader = ExtResource("3_71fiy")
+shader_parameter/BallColor = Color(0.913725, 0.521569, 0, 1)
+shader_parameter/FresnelPower = 4.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_kuat4"]
+
+[node name="FireballDisplay" type="CharacterBody3D"]
 script = ExtResource("1_kvfhi")
+
+[node name="FireballMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.278, 0, 0, 0, 0.278, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_yrhou")
+cast_shadow = 0
+mesh = SubResource("SphereMesh_kcqu4")
+skeleton = NodePath("")
+
+[node name="FireballHeadmesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0.230397, 0, 0)
+material_override = SubResource("ShaderMaterial_yt5k8")
+mesh = SubResource("SphereMesh_kuat4")

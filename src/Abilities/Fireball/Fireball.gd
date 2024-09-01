@@ -16,8 +16,8 @@ func use_ability(userRef, mouse_coords):
 	var spawn = get_ability_spawn(user)
 	
 	var new_fireball = fireball.instantiate()
-	new_fireball.position = spawn.position
-	new_fireball.configure(user, mouse_coords.position - user.position)
+	new_fireball.position = user.position
+	new_fireball.configure_entity(user, mouse_coords.position - user.position)
 	
 	
 	get_node("/root/Game/MainMap/Map/Players").add_child(new_fireball)

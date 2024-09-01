@@ -1,10 +1,10 @@
 extends CharacterBody3D
 class_name Entity
 
-var ability_target_velocity = Vector3.ZERO
-var ability_direction = Vector3.ZERO
-var ability_parent = null
-var ability_current_distance = Vector3.ZERO
+var entity_target_velocity = Vector3.ZERO
+var entity_direction = Vector3.ZERO
+var entity_parent = null
+var entity_current_distance = Vector3.ZERO
 
 #func _enter_tree():
 	#set_multiplayer_authority(name.to_int())
@@ -17,5 +17,5 @@ func load_ability(name : String, use_key : String, cooldown_value : float):
 	add_child(new_ability)
 	return new_ability
 
-func configure_ability(parent: Entity = null, direction: Vector3 = Vector3.ZERO):
+func configure_entity(parent: Entity = null, direction: Vector3 = Vector3.ZERO):
 	pass

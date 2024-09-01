@@ -2,6 +2,12 @@ extends Node
 
 class_name Ability
 
+
+var ability_target_velocity = Vector3.ZERO
+var ability_direction = Vector3.ZERO
+var ability_parent = null
+var ability_current_distance = Vector3.ZERO
+
 var base_cooldown : float # Cooldown time in seconds
 var ability_trigger : String # Key to trigger ability
 var can_use : bool
@@ -35,4 +41,7 @@ func get_ref(node_path) -> Node:
 	
 func get_ability_spawn(user: CharacterBody3D) -> Marker3D:
 	return user.get_node("AbilitySpawnPosition")
+	
+func configure_ability(parent: Entity = null, direction: Vector3 = Vector3.ZERO):
+	pass
 	
