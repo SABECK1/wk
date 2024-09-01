@@ -1,7 +1,7 @@
 class_name Blink extends Ability
 
+var blink_range := AbilityVariables.blink_range
 
-const blink_range = 10
 func use_ability(userRef, mouse_coords):
 	if not can_use_ability():
 		print("Blink on Cooldown")

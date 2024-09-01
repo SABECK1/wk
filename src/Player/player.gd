@@ -12,8 +12,9 @@ var can_move := true
 	
 var blink = load_ability("Blink", "ability_q", 10.0)
 var ghost = load_ability("Ghost", "ability_e", 2.0)
+var fireball = load_ability("Fireball", "ability_r", 5.0)
 
-var abilities = [blink, ghost]
+var abilities = [blink, ghost, fireball]
 #
 func _ready():
 	if get_parent_node_3d().name == "DummyPlayers":

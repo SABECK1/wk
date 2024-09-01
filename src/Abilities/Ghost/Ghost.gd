@@ -14,5 +14,5 @@ func use_ability(userRef, mouse_coords):
 	g.position = user.position
 	g.configure(user, mouse_coords.position - user.position)
 	
-	get_node("/root/Game/Levels/Players").add_child(g)
+	get_node("/root/Game/MainMap/Map/Players").add_child(g)
 	set_on_cooldown()

@@ -35,3 +35,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_0g4wi")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_7y30e")
+
+[node name="AbilitySpawnPosition" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -4.37114e-08)

@@ -24,12 +24,15 @@ func set_on_cooldown():
 		can_use = false
 		get_tree().create_timer(base_cooldown).timeout.connect(func(): can_use = true)
 	
-func can_use_ability():
+func can_use_ability() -> bool:
 	return can_use
 		
-func get_trigger():
+func get_trigger() -> String:
 	return ability_trigger
 	
-func get_ref(node_path):
+func get_ref(node_path) -> Node:
 	return get_node(node_path)
+	
+func get_ability_spawn(user: CharacterBody3D) -> Marker3D:
+	return user.get_node("AbilitySpawnPosition")
 	

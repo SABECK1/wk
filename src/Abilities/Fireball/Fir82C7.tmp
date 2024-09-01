@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ogfm2ebwsgf8"]
+
+[ext_resource type="Script" path="res://src/Abilities/Fireball/FireballDisplay.gd" id="1_kvfhi"]
+
+[node name="FireballDisplay" type="Node3D"]
+script = ExtResource("1_kvfhi")
