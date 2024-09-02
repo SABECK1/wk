@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ogfm2ebwsgf8"]
+[gd_scene load_steps=9 format=3 uid="uid://ogfm2ebwsgf8"]
 
 [ext_resource type="Script" path="res://src/Abilities/Fireball/FireballDisplay.gd" id="1_kvfhi"]
 [ext_resource type="Shader" uid="uid://b4yupkfr2p0" path="res://src/Assets/Shaders/FireballShader.tres" id="2_ax777"]
@@ -22,17 +22,30 @@ shader_parameter/FresnelPower = 4.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_kuat4"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_y75fk"]
+
 [node name="FireballDisplay" type="CharacterBody3D"]
+transform = Transform3D(-2, 0, 1.74845e-07, 0, 2, 0, -1.74845e-07, 0, -2, 0, 0, 0)
+motion_mode = 1
 script = ExtResource("1_kvfhi")
 
-[node name="FireballMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.278, 0, 0, 0, 0.278, 0, 0, 0)
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="FireballMesh" type="MeshInstance3D" parent="Area3D"]
+transform = Transform3D(-2.18557e-08, 0, 0.278, 0, 0.278, 0, -0.5, 0, -1.21518e-08, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_yrhou")
 cast_shadow = 0
 mesh = SubResource("SphereMesh_kcqu4")
 skeleton = NodePath("")
 
-[node name="FireballHeadmesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0.230397, 0, 0)
+[node name="FireballHeadmesh" type="MeshInstance3D" parent="Area3D"]
+transform = Transform3D(-2.62268e-08, 0, 0.6, 0, 0.6, 0, -0.6, 0, -2.62268e-08, -2.75401e-08, 0, -0.315022)
 material_override = SubResource("ShaderMaterial_yt5k8")
 mesh = SubResource("SphereMesh_kuat4")
+skeleton = NodePath("../..")
+
+[node name="FireballHitbox" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, -1.87382e-08, 0, -0.21434)
+shape = SubResource("SphereShape3D_y75fk")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

@@ -172,6 +172,7 @@ func start_game():
 func move_players(parent_node: Node, new_parent: Node) -> void:
 	for player in parent_node.get_children():
 		parent_node.remove_child(player)
+		player.position.y = 1
 		new_parent.add_child(player)
 		player.can_move = true
 

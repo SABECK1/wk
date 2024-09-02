@@ -13,10 +13,13 @@ func use_ability(userRef, mouse_coords):
 	
 	## Ghost should spawn at User location
 	#g.position = user.position
-	var spawn = get_ability_spawn(user)
+	var spawn = get_ability_spawn(user).global_position
 	
 	var new_fireball = fireball.instantiate()
-	new_fireball.position = user.position
+	
+
+	new_fireball.global_position = spawn
+	
 	new_fireball.configure_entity(user, mouse_coords.position - user.position)
 	
 	
