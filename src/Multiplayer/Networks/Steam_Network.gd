@@ -132,25 +132,25 @@ func toggle_ready(sender_id):
 			all_ready = false
 			
 	if all_ready == true:
-		start_timer.rpc()
+		start_timer()
 	else:
-		stop_timer.rpc()
+		stop_timer()
 		
 
 	
-@rpc("any_peer", "call_local")	
+#@rpc("any_peer", "call_local")	
 func start_timer() -> void:
 	$StartGameTimer.start()
 	
-@rpc("any_peer", "call_local")
+#@rpc("any_peer", "call_local")
 func stop_timer() -> void:
 	$StartGameTimer.stop()
 	timer_count = 3
 	
 func _on_start_game_timer_timeout() -> void:
-	add_message.rpc("Game starting in %d seconds" % timer_count)
+	add_message("Game starting in %d seconds" % timer_count)
 	if timer_count == 0:
-		add_message.rpc("Starting Game, please wait...")
+		add_message("Starting Game, please wait...")
 		$StartGameTimer.stop()
 		start_game()
 		return

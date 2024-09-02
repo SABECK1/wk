@@ -76,7 +76,7 @@ func _on_players_child_entered_tree(node: Node) -> void:
 	_build_multiplayer_network()
 	active_network.position_players(node)
 	
-@rpc("call_local","any_peer")
+
 func toggle_ready(sender_id) -> void:
 	_build_multiplayer_network()
 	active_network.toggle_ready.rpc(sender_id)
