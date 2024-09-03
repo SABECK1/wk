@@ -16,6 +16,10 @@ shadow_enabled = true
 [node name="Players" type="Node3D" parent="Map"]
 unique_name_in_owner = true
 
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Map"]
+_spawnable_scenes = PackedStringArray("res://src/Scenes/PlayerScenes/PlayerScene.tscn")
+spawn_path = NodePath("../Players")
+
 [node name="MainCam" type="Camera3D" parent="."]
 transform = Transform3D(1.5849e-07, 0.687087, -0.726575, -6.35192e-08, 0.726575, 0.687087, 1, -6.27449e-08, 1.58798e-07, -45, 32.973, -2)
 fov = 46.1

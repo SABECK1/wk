@@ -20,6 +20,6 @@ func _physics_process(delta):
 	self.look_at(entity_direction * 2000, Vector3.UP)
 	move_and_slide()
 
-
+@rpc("any_peer", "call_local")
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	print("Hit!")
