@@ -6,4 +6,4 @@ const blink_range = 10
 const ghost_max_distance = 1150
 
 ##########KNOCKBACK################
-const Fireball_Knockback := 5.0
+const Fireball_Knockback := 15.0

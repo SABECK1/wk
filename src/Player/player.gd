@@ -67,6 +67,11 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.z, 0, PlayerVariables.speed)
 		velocity.z = move_toward(velocity.z, 0, PlayerVariables.speed)
+		
+	if entity_current_knockback != Vector3.ZERO:
+		velocity += entity_current_knockback
+		entity_current_knockback = lerp(entity_current_knockback, Vector3.ZERO, 0.01)
+	
 	move_and_slide()
 	
 	

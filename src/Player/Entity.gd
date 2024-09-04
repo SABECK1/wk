@@ -5,7 +5,8 @@ var entity_target_velocity := Vector3.ZERO
 var entity_direction := Vector3.ZERO
 var entity_parent: Node3D = null
 var entity_current_distance := Vector3.ZERO
-var entity_knockback := 0
+var entity_knockback := 0.0
+var entity_current_knockback := Vector3.ZERO 
 
 #func _enter_tree():
 	#set_multiplayer_authority(name.to_int())
@@ -22,12 +23,11 @@ func configure_entity(parent: Entity = null, direction: Vector3 = Vector3.ZERO, 
 	pass
 	
 func handle_hit(ability: Entity):
-	var knockback_source_position = Vector3.ZERO
-	var knockback_direction = knockback_source_position.direction_to(self.global_position)
+	var knockback_source_position := Vector3.ZERO
+	var knockback_direction := knockback_source_position.direction_to(self.global_position)
 	knockback_direction.y = 0
 	
 	var knockback_strength = ability.entity_knockback 
-	var knockback = knockback_direction * knockback_strength
-	
-	self.global_position += knockback
+
+	entity_current_knockback = knockback_direction * knockback_strength
 	
