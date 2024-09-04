@@ -1,10 +1,11 @@
 extends CharacterBody3D
 class_name Entity
 
-var entity_target_velocity = Vector3.ZERO
-var entity_direction = Vector3.ZERO
-var entity_parent = null
-var entity_current_distance = Vector3.ZERO
+var entity_target_velocity := Vector3.ZERO
+var entity_direction := Vector3.ZERO
+var entity_parent: Node3D = null
+var entity_current_distance := Vector3.ZERO
+var entity_knockback := 0
 
 #func _enter_tree():
 	#set_multiplayer_authority(name.to_int())
@@ -21,4 +22,7 @@ func configure_entity(parent: Entity = null, direction: Vector3 = Vector3.ZERO):
 	pass
 	
 func handle_hit(ability: Entity):
-	print(ability.name)
+	var knockback_source_position = Vector3.ZERO
+	var knockback_direction = knockback_source_position.direction_to(self.global_position)
+	#var knockback_strenght = 
+	
