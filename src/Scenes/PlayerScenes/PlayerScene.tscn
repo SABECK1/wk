@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bahg8piforqi1"]
+[gd_scene load_steps=8 format=3 uid="uid://bahg8piforqi1"]
 
 [ext_resource type="Script" path="res://src/Player/Player.gd" id="1_nqus4"]
 
@@ -26,6 +26,8 @@ properties/3/path = NodePath("Body:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ef577"]
+
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.02719, 0)
 script = ExtResource("1_nqus4")
@@ -47,3 +49,6 @@ visibility_parent = NodePath("../Body")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_s8ty2")
+
+[node name="PlayerHitbox" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ef577")

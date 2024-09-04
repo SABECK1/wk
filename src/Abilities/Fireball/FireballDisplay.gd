@@ -22,4 +22,5 @@ func _physics_process(delta):
 
 @rpc("any_peer", "call_local")
 func _on_area_3d_body_entered(body: Node3D) -> void:
-	print("Hit!")
+	if body.has_method("handle_hit"):
+		body.handle_hit(self)

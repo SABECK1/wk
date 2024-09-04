@@ -19,3 +19,6 @@ func load_ability(name : String, use_key : String, cooldown_value : float):
 
 func configure_entity(parent: Entity = null, direction: Vector3 = Vector3.ZERO):
 	pass
+	
+func handle_hit(ability: Entity):
+	print(ability.name)
