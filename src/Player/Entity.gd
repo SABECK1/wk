@@ -24,5 +24,10 @@ func configure_entity(parent: Entity = null, direction: Vector3 = Vector3.ZERO, 
 func handle_hit(ability: Entity):
 	var knockback_source_position = Vector3.ZERO
 	var knockback_direction = knockback_source_position.direction_to(self.global_position)
-	#var knockback_strenght = 
+	knockback_direction.y = 0
+	
+	var knockback_strength = ability.entity_knockback 
+	var knockback = knockback_direction * knockback_strength
+	
+	self.global_position += knockback
 	

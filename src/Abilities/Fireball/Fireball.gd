@@ -20,7 +20,7 @@ func use_ability(userRef, mouse_coords):
 
 	new_fireball.global_position = spawn
 	
-	new_fireball.configure_entity(user, mouse_coords.position - user.position, AbilityVariables.FireBall_Knockback)
+	new_fireball.configure_entity(user, mouse_coords.position - user.position, AbilityVariables.Fireball_Knockback)
 	
 	
 	get_node("/root/Game/MainMap/Map/Players").add_child(new_fireball)
