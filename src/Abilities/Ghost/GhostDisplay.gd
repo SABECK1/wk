@@ -1,6 +1,6 @@
 extends Entity
 
-func configure_entity(parent: Entity = null, direction: Vector3 = Vector3.ZERO):
+func configure_entity(parent: Entity = null, direction: Vector3 = Vector3.ZERO, knockback_factor: float = 0.0):
 	entity_direction = direction
 	entity_parent = parent
 

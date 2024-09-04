@@ -18,7 +18,7 @@ func load_ability(name : String, use_key : String, cooldown_value : float):
 	add_child(new_ability)
 	return new_ability
 
-func configure_entity(parent: Entity = null, direction: Vector3 = Vector3.ZERO):
+func configure_entity(parent: Entity = null, direction: Vector3 = Vector3.ZERO, knockback_factor: float = 0.0):
 	pass
 	
 func handle_hit(ability: Entity):
