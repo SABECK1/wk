@@ -30,4 +30,3 @@ func handle_hit(ability: Entity):
 	var knockback_strength = ability.entity_knockback 
 
 	entity_current_knockback = knockback_direction * knockback_strength
-	
