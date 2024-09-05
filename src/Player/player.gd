@@ -1,4 +1,4 @@
-extends Entity
+extends HittableEntity
 const RAY_LENGTH = 2000
 var ray_origin = Vector3()
 var ray_target = Vector3()

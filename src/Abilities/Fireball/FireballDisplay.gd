@@ -1,9 +1,13 @@
 extends Entity
 
-func configure_entity(parent: Entity = null, direction: Vector3 = Vector3.ZERO, knockback_factor: float = 0.0):
+func configure_entity(parent: Entity = null, 
+					  direction: Vector3 = Vector3.ZERO, 
+					  knockback_factor: float = 0.0,
+					  damage: int = 0):
 	entity_direction = direction
 	entity_parent = parent
 	entity_knockback = knockback_factor
+	entity_damage = damage
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,5 +27,6 @@ func _physics_process(delta):
 
 @rpc("any_peer", "call_local")
 func _on_area_3d_body_entered(body: Node3D) -> void:
-	if body.has_method("handle_hit"):
+	# You shouldn't be able to hit yourself!
+	if body.has_method("handle_hit") and body != entity_parent:
 		body.handle_hit(self)

@@ -41,7 +41,5 @@ func get_ref(node_path) -> Node:
 	
 func get_ability_spawn(user: CharacterBody3D) -> Marker3D:
 	return user.get_node("AbilitySpawnPosition")
-	
-func configure_ability(parent: Entity = null, direction: Vector3 = Vector3.ZERO):
-	pass
+
 	

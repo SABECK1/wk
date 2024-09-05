@@ -1,10 +1,13 @@
 extends Entity
 
-func configure_entity(parent: Entity = null, direction: Vector3 = Vector3.ZERO, knockback_factor: float = 0.0):
+
+func configure_entity(parent: Entity = null, 
+					  direction: Vector3 = Vector3.ZERO, 
+					  knockback_factor: float = 0.0,
+					  damage: int = 0):
 	entity_direction = direction
 	entity_parent = parent
-
-
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	# Ghost Movement Direction
