@@ -1,4 +1,4 @@
-class_name Blink extends Ability
+class_name DamageBlink extends Ability
 
 var blink_range := AbilityVariables.blink_range
 @export var hitbox_scene : PackedScene
