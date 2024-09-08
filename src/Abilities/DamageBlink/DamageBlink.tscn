@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://comaq31pakins"]
+
+[ext_resource type="Script" path="res://src/Abilities/DamageBlink/DamageBlink.gd" id="1_mex5u"]
+[ext_resource type="PackedScene" uid="uid://bktdxxl1jmvoh" path="res://src/Abilities/DamageBlink/DamageBlinkHitbox.tscn" id="2_7ggu0"]
+
+[node name="DamageBlink" type="Node3D"]
+script = ExtResource("1_mex5u")
+hitbox_scene = ExtResource("2_7ggu0")

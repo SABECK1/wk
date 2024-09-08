@@ -10,11 +10,12 @@ var is_host: bool
 
 var can_move := true
 	
-var blink = load_ability("Blink", "ability_q", 10.0)
-var ghost = load_ability("Ghost", "ability_e", 2.0)
-var fireball = load_ability("Fireball", "ability_r", 5.0)
+#var blink = load_ability("Blink", "ability_q", AbilityVariables.blink_cooldown)
+var ghost = load_ability("Ghost", "ability_e", AbilityVariables.damageblink_cooldown)
+var fireball = load_ability("Fireball", "ability_r", AbilityVariables.fireball_cooldown)
+var damageblink = load_ability("DamageBlink", "ability_q", AbilityVariables.damageblink_cooldown)
 
-var abilities = [blink, ghost, fireball]
+var abilities = [damageblink, ghost, fireball]
 #
 func _ready():
 	if get_parent_node_3d().name == "DummyPlayers":

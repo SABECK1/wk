@@ -1,7 +1,7 @@
-class_name DamageBlink extends Ability
+class_name Blink extends Ability
 
 var blink_range := AbilityVariables.blink_range
-
+@export var hitbox_scene : PackedScene
 func use_ability(userRef, mouse_coords):
 	if not can_use_ability():
 		print("Blink on Cooldown")
@@ -15,7 +15,7 @@ func use_ability(userRef, mouse_coords):
 	var direction = mouse_coords.position - user.position
 	var direction_norm = direction.normalized()
 	
-	
+	# If div < 1 the teleport still 
 	if direction.x < 1 and direction.x > -1:
 		user.position.x = user.position.x + direction.x * blink_range
 	else:
@@ -24,6 +24,7 @@ func use_ability(userRef, mouse_coords):
 		user.position.z = user.position.z + direction.z * blink_range
 	else:
 		user.position.z = user.position.z + direction_norm.z * blink_range
-	
+	var hitbox = hitbox_scene.instantiate()
+	add_child(hitbox)
 	set_on_cooldown()
 	

@@ -1,5 +1,7 @@
 extends Entity
 
+	
+
 func configure_entity(parent: Entity = null, 
 					  direction: Vector3 = Vector3.ZERO, 
 					  knockback_factor: float = 0.0,
@@ -24,9 +26,3 @@ func _physics_process(delta):
 	look_direction.z *= -1
 	self.look_at(entity_direction * 2000, Vector3.UP)
 	move_and_slide()
-
-@rpc("any_peer", "call_local")
-func _on_area_3d_body_entered(body: Node3D) -> void:
-	# You shouldn't be able to hit yourself!
-	if body.has_method("handle_hit") and body != entity_parent:
-		body.handle_hit(self)

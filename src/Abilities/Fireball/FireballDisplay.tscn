@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://ogfm2ebwsgf8"]
+[gd_scene load_steps=8 format=3 uid="uid://ogfm2ebwsgf8"]
 
 [ext_resource type="Script" path="res://src/Abilities/Fireball/FireballDisplay.gd" id="1_kvfhi"]
+[ext_resource type="Script" path="res://src/Abilities/Fireball/FireballHitbox.gd" id="2_2laiw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yrhou"]
 
@@ -38,5 +39,6 @@ skeleton = NodePath("../..")
 [node name="FireballHitbox" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(10, 0, 2.36848e-13, 0, 10, 0, -2.36848e-13, 0, 10, -1.87382e-08, 0, -0.21434)
 shape = SubResource("SphereShape3D_y75fk")
+script = ExtResource("2_2laiw")
 
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="Area3D" to="Area3D/FireballHitbox" method="_on_area_3d_body_entered"]
