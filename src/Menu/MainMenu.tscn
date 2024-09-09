@@ -1,19 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://blxonpuumhciy"]
+[gd_scene load_steps=5 format=3 uid="uid://blxonpuumhciy"]
 
 [ext_resource type="Script" path="res://src/Menu/MainMenu.gd" id="1_4epyi"]
-[ext_resource type="PackedScene" uid="uid://bahg8piforqi1" path="res://src/Scenes/PlayerScenes/PlayerScene.tscn" id="2_luxqi"]
+[ext_resource type="PackedScene" uid="uid://bahg8piforqi1" path="res://src/Scenes/PlayerScenes/PlayerScene.tscn" id="2_ej5sx"]
+[ext_resource type="Script" path="res://src/Multiplayer/Steam/Network_Manager.gd" id="3_gptch"]
+
+[sub_resource type="GDScript" id="GDScript_6ydau"]
+script/source = "extends MultiplayerSpawner
+
+
+# Called when the node enters the scene tree for the first time.
+"
 
 [node name="Game" type="Node3D"]
 
 [node name="MainMenu" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_right = 1.083
+anchor_bottom = 0.84
+offset_right = 9.38391
+offset_bottom = 2.67999
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4epyi")
-main_scene = ExtResource("2_luxqi")
+dummy_player = ExtResource("2_ej5sx")
 
 [node name="Join" type="Button" parent="MainMenu"]
 layout_mode = 1
@@ -22,40 +31,199 @@ anchor_left = 0.03
 anchor_top = 0.038
 anchor_right = 0.03
 anchor_bottom = 0.038
-offset_left = 27.44
-offset_top = -6.624
-offset_right = 124.44
-offset_bottom = 64.376
+offset_left = -5.71
+offset_top = 51.214
+offset_right = 98.29
+offset_bottom = 86.214
 text = "Join"
 
 [node name="Host" type="Button" parent="MainMenu"]
 layout_mode = 0
-offset_left = 61.0
-offset_top = 103.0
-offset_right = 161.0
-offset_bottom = 166.0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 136.0
+offset_bottom = 59.0
 text = "Host"
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="MainMenu"]
 _spawnable_scenes = PackedStringArray("res://src/Scenes/PlayerScenes/PlayerScene.tscn")
-spawn_path = NodePath("../../Levels/Players")
+spawn_path = NodePath("../../MultiplayerLobby/Map/DummyPlayers")
+script = SubResource("GDScript_6ydau")
 
-[node name="Levels" type="Node3D" parent="."]
+[node name="SteamName" type="Label" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.138
+anchor_top = 0.193
+anchor_right = 0.138
+anchor_bottom = 0.193
+offset_left = -21.466
+offset_top = -81.571
+offset_right = 106.534
+offset_bottom = -50.571
 
-[node name="Ground" type="CSGCylinder3D" parent="Levels"]
-use_collision = true
-radius = 24.0
-height = 0.002
+[node name="LobbyList" type="PopupPanel" parent="MainMenu"]
+mode = 1
+initial_position = 2
+size = Vector2i(700, 450)
 
-[node name="Sun" type="DirectionalLight3D" parent="Levels"]
-transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 25, 0)
+[node name="Panel" type="Panel" parent="MainMenu/LobbyList"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 696.0
+offset_bottom = 446.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LobbyListLabel" type="Label" parent="MainMenu/LobbyList/Panel"]
+layout_mode = 0
+offset_right = 592.0
+offset_bottom = 292.0
+text = "Lobby List"
+
+[node name="CloseLobbyList" type="Button" parent="MainMenu/LobbyList/Panel"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 400.0
+offset_right = 632.0
+offset_bottom = 431.0
+text = "Close Lobby List"
+
+[node name="LobbyListScroll" type="ScrollContainer" parent="MainMenu/LobbyList/Panel"]
+layout_mode = 0
+offset_top = 20.0
+offset_right = 570.0
+offset_bottom = 310.0
+
+[node name="LobbyListVBOX" type="VBoxContainer" parent="MainMenu/LobbyList/Panel/LobbyListScroll"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+alignment = 1
+
+[node name="LobbyHUD" type="Control" parent="MainMenu"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Start" type="Button" parent="MainMenu/LobbyHUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.038
+anchor_right = 0.03
+anchor_bottom = 0.038
+offset_left = 462.8
+offset_top = 566.48
+offset_right = 590.8
+offset_bottom = 637.48
+text = "Start Game"
+
+[node name="Chat" type="Panel" parent="MainMenu/LobbyHUD"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 408.0
+offset_right = 264.0
+offset_bottom = 588.0
+
+[node name="ChatContent" type="RichTextLabel" parent="MainMenu/LobbyHUD/Chat"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 252.0
+offset_bottom = 176.0
+
+[node name="Send" type="Button" parent="MainMenu/LobbyHUD"]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 600.0
+offset_right = 319.0
+offset_bottom = 635.0
+text = "Send"
+
+[node name="TextEdit" type="TextEdit" parent="MainMenu/LobbyHUD/Send"]
+layout_mode = 0
+offset_left = -264.0
+offset_right = -14.0
+offset_bottom = 35.0
+scale = Vector2(1.01007, 0.970458)
+text = "asd"
+
+[node name="Leave" type="Button" parent="MainMenu/LobbyHUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.038
+anchor_right = 0.03
+anchor_bottom = 0.038
+offset_left = 30.8
+offset_top = 122.48
+offset_right = 135.8
+offset_bottom = 157.48
+text = "Leave Lobby"
+
+[node name="Username" type="TextEdit" parent="MainMenu"]
+visible = false
+layout_mode = 0
+offset_left = 169.0
+offset_top = 23.0
+offset_right = 369.0
+offset_bottom = 58.0
+
+[node name="MultiplayerLobby" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Map" type="Node3D" parent="MultiplayerLobby"]
+
+[node name="Sun" type="DirectionalLight3D" parent="MultiplayerLobby/Map"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866026, 0, -0.866026, -0.5, 0, 25, -9)
 shadow_enabled = true
 
-[node name="MainCam" type="Camera3D" parent="Levels"]
-transform = Transform3D(-1, -8.74228e-08, 0, -6.35192e-08, 0.726575, 0.687087, -6.00671e-08, 0.687087, -0.726575, 0, 32.973, -43)
-fov = 46.1
+[node name="DummyPlayers" type="Node3D" parent="MultiplayerLobby/Map"]
 
-[node name="Players" type="Node3D" parent="Levels"]
+[node name="CSGBox3D" type="CSGBox3D" parent="MultiplayerLobby/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+size = Vector3(19, 1, 11)
+metadata/_edit_group_ = true
+
+[node name="1" type="CSGCylinder3D" parent="MultiplayerLobby/Map/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, -3)
+radius = 2.0
+height = 4.0
+
+[node name="2" type="CSGCylinder3D" parent="MultiplayerLobby/Map/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, -3)
+radius = 2.0
+height = 4.0
+
+[node name="3" type="CSGCylinder3D" parent="MultiplayerLobby/Map/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -3)
+radius = 2.0
+height = 4.0
+
+[node name="4" type="CSGCylinder3D" parent="MultiplayerLobby/Map/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1, -3)
+radius = 2.0
+height = 4.0
+
+[node name="MainCam" type="Camera3D" parent="MultiplayerLobby"]
+transform = Transform3D(-1, -8.74228e-08, 4.43028e-14, -8.50428e-08, 0.972776, 0.231747, -2.026e-08, 0.231747, -0.972776, 0, 10, -17.975)
+fov = 54.9623
+
+[node name="Network_Manager" type="Node" parent="." node_paths=PackedStringArray("_players_spawn_node")]
+unique_name_in_owner = true
+script = ExtResource("3_gptch")
+_players_spawn_node = NodePath("../MultiplayerLobby/Map/DummyPlayers")
 
 [connection signal="pressed" from="MainMenu/Join" to="MainMenu" method="_on_join_pressed"]
 [connection signal="pressed" from="MainMenu/Host" to="MainMenu" method="_on_host_pressed"]
+[connection signal="spawned" from="MainMenu/PlayerSpawner" to="Network_Manager" method="_on_player_spawner_spawned"]
+[connection signal="pressed" from="MainMenu/LobbyList/Panel/CloseLobbyList" to="MainMenu" method="_on_close_lobby_list_pressed"]
+[connection signal="pressed" from="MainMenu/LobbyHUD/Start" to="MainMenu" method="_on_start_pressed"]
+[connection signal="pressed" from="MainMenu/LobbyHUD/Send" to="MainMenu" method="_on_send_pressed"]
+[connection signal="pressed" from="MainMenu/LobbyHUD/Leave" to="MainMenu" method="_on_leave_pressed"]
+[connection signal="child_entered_tree" from="MultiplayerLobby/Map/DummyPlayers" to="Network_Manager" method="_on_players_child_entered_tree"]

@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cnfb6ht8jbtjj"]
+
+[node name="MainMap" type="Node3D"]
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="Ground" type="CSGCylinder3D" parent="Map"]
+use_collision = true
+radius = 24.0
+height = 0.002
+
+[node name="Sun" type="DirectionalLight3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 25, 0)
+shadow_enabled = true
+
+[node name="Players" type="Node3D" parent="Map"]
+unique_name_in_owner = true
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Map"]
+_spawnable_scenes = PackedStringArray("res://src/Scenes/PlayerScenes/PlayerScene.tscn")
+spawn_path = NodePath("../Players")
+
+[node name="MainCam" type="Camera3D" parent="."]
+transform = Transform3D(1.5849e-07, 0.687087, -0.726575, -6.35192e-08, 0.726575, 0.687087, 1, -6.27449e-08, 1.58798e-07, -45, 32.973, -2)
+fov = 46.1

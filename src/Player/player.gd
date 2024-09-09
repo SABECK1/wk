@@ -1,13 +1,32 @@
-extends Entity
+extends HittableEntity
 const RAY_LENGTH = 2000
 var ray_origin = Vector3()
 var ray_target = Vector3()
-@onready var cam = get_node("/root/Game/Levels/MainCam")
+@onready var cam: Camera3D
 
-var blink = load_ability("Blink", "ability_q", 10.0)
-var ghost = load_ability("Ghost", "ability_e", 2.0)
+var steam_id: int
+var is_host: bool
 
-var abilities = [blink, ghost]
+var can_move := true
+
+signal take_damage(health: int)
+	
+#var blink = load_ability("Blink", "ability_q", AbilityVariables.blink_cooldown)
+var ghost = load_ability("Ghost", "ability_e", AbilityVariables.damageblink_cooldown)
+var fireball = load_ability("Fireball", "ability_r", AbilityVariables.fireball_cooldown)
+var damageblink = load_ability("DamageBlink", "ability_q", AbilityVariables.damageblink_cooldown)
+
+var abilities = [damageblink, ghost, fireball]
+#
+func _ready():
+	if get_parent_node_3d().name == "DummyPlayers":
+		can_move = false
+		cam = get_node("/root/Game/MultiplayerLobby/MainCam")
+	else:
+		can_move = true
+		
+	cam.make_current()
+	set_multiplayer_authority(name.to_int())
 
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -15,9 +34,9 @@ func _unhandled_input(event):
 			if InputMap.action_has_event(action, event):
 				for ability in abilities:
 					if ability.get_trigger() == action:
-						if not is_multiplayer_authority():
+						if not is_multiplayer_authority() or not can_move:
 							return
-						ability.use_ability(self, get_cursor())
+						ability.use_ability.rpc(self.get_path(), get_cursor())
 
 func get_cursor():
 	#	Get Mousepos as Target Ray
@@ -37,7 +56,7 @@ func get_cursor():
 var speed = PlayerVariables.speed
 
 func _physics_process(delta):
-	if not is_multiplayer_authority():
+	if not is_multiplayer_authority() or not can_move:
 		return
 	var mouse_coordinates = get_cursor()
 
@@ -50,6 +69,15 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.z, 0, PlayerVariables.speed)
 		velocity.z = move_toward(velocity.z, 0, PlayerVariables.speed)
+		
+	if entity_current_knockback != Vector3.ZERO:
+		velocity += entity_current_knockback
+		entity_current_knockback = lerp(entity_current_knockback, Vector3.ZERO, 0.01)
+		
+		if entity_current_knockback.length() <= PlayerVariables.knockback_threshold:
+			entity_current_knockback = Vector3.ZERO
+	
+	
 	move_and_slide()
 	
 	
