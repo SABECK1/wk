@@ -4,11 +4,12 @@ var ray_origin = Vector3()
 var ray_target = Vector3()
 @onready var cam: Camera3D
 
-var placeholder_name: String
 var steam_id: int
 var is_host: bool
 
 var can_move := true
+
+signal take_damage(health: int)
 	
 #var blink = load_ability("Blink", "ability_q", AbilityVariables.blink_cooldown)
 var ghost = load_ability("Ghost", "ability_e", AbilityVariables.damageblink_cooldown)

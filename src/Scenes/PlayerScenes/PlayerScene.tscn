@@ -1,6 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bahg8piforqi1"]
+[gd_scene load_steps=11 format=3 uid="uid://bahg8piforqi1"]
 
 [ext_resource type="Script" path="res://src/Player/Player.gd" id="1_nqus4"]
+[ext_resource type="PackedScene" uid="uid://bst511nxeko8n" path="res://src/Assets/Playerassets/Healthbar.tscn" id="2_pm6ey"]
+[ext_resource type="Script" path="res://src/Assets/Playerassets/healthbar.gd" id="3_bqbei"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_iupbm"]
 
@@ -28,6 +30,9 @@ properties/3/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ef577"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_56lan"]
+viewport_path = NodePath("SubViewport")
+
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.02719, 0)
 script = ExtResource("1_nqus4")
@@ -52,3 +57,18 @@ replication_config = SubResource("SceneReplicationConfig_s8ty2")
 
 [node name="PlayerHitbox" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ef577")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+
+[node name="Healthbar" parent="SubViewport" instance=ExtResource("2_pm6ey")]
+value = 100.0
+script = ExtResource("3_bqbei")
+
+[node name="HealthbarSprite" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_56lan")
+
+[connection signal="take_damage" from="." to="SubViewport/Healthbar" method="_on_player_take_damage"]
