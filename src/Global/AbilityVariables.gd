@@ -13,3 +13,5 @@ const damageblink_knockback := 15.0
 const damageblink_cooldown = 10
 const blink_cooldown = 8
 const fireball_cooldown = 5
+##########DELAYS##################
+const damageblink_delay = 0.6

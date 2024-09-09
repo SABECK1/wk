@@ -1,7 +1,19 @@
 class_name DamageBlink extends Ability
-
 var blink_range := AbilityVariables.blink_range
 @export var hitbox_scene : PackedScene
+var hitbox : Node3D
+
+
+func add_hitbox():
+	hitbox = hitbox_scene.instantiate()
+	add_child(hitbox)
+	get_tree().create_timer(0.05).timeout.connect(remove_hitbox)
+	
+	
+func remove_hitbox():
+	hitbox.queue_free()
+
+
 func use_ability(userRef, mouse_coords):
 	if not can_use_ability():
 		print("Blink on Cooldown")
@@ -24,7 +36,10 @@ func use_ability(userRef, mouse_coords):
 		user.position.z = user.position.z + direction.z * blink_range
 	else:
 		user.position.z = user.position.z + direction_norm.z * blink_range
-	var hitbox = hitbox_scene.instantiate()
-	add_child(hitbox)
-	set_on_cooldown()
+	set_on_cooldown()	
+	
+	get_tree().create_timer(AbilityVariables.damageblink_delay).timeout.connect(add_hitbox)
+	# After setting it on cooldown, we add the damage hitbox after a timer
+
+	
 	
